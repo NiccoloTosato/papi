@@ -1,0 +1,6 @@
+
+COMPSRCS += components/amd_energy/linux-amd_energy.c 
+COMPOBJS += linux-amd_energy.o
+
+linux-amd_energy.o: components/amd_energy/linux-amd_energy.c
+	$(CC) $(LIBCFLAGS) $(OPTFLAGS) -c components/amd_energy/linux-amd_energy.c -o linux-amd_energy.o 
