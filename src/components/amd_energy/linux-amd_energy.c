@@ -73,11 +73,13 @@ typedef struct _energy_reg_alloc
 	_energy_register_t ra_bits;
 } _energy_reg_alloc_t;
 
-//va alzato almeno a 192
+
 /* actually 32?  But setting this to be safe? */
+/* since AMD has per-core counter, we need at least one counter per core + one per socket */
+/*   this end up in at least 130*2 counters */
 #define AMD_ENERGY_MAX_COUNTERS 260
 
-//oks
+
 typedef struct _energy_control_state
 {
   int being_measured[AMD_ENERGY_MAX_COUNTERS];
@@ -91,6 +93,7 @@ typedef struct _energy_control_state
 // uint32_t that may wrap. We keep a start_value which is reset at
 // _start and every read, handle overflows of the uint32_t, and
 // accumulate a uint64_t which we return.
+// We must check which amd has 64bit registry, the wrap could never happen in certain models
 
 typedef struct _energy_context
 {
@@ -112,9 +115,9 @@ static int num_events		= 0;
 struct fd_array_t *fd_array=NULL;
 static int num_packages=0,num_cpus=0;
 
-int power_divisor,time_divisor;
+int power_divisor;
 
-int cpu_energy_divisor,dram_energy_divisor;
+int cpu_energy_divisor;
 unsigned int msr_rapl_power_unit;
 
 #define PACKAGE_ENERGY      	0
@@ -428,7 +431,7 @@ _amd_energy_init_component( int cidx )
 
 
      
-     //cosi a cazzo di canes ???
+     // the first half of events is reversed for counting, the second one for values
      i = 0;
      k = num_events/2;
 
