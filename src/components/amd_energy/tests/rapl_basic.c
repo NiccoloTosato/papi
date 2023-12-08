@@ -111,7 +111,7 @@ int main (int argc, char **argv)
 #endif
 
         /* Set TESTS_QUIET variable */
-     tests_quiet( argc, argv );
+	tests_quiet( argc, argv );
 
 	/* PAPI Initialization */
      retval = PAPI_library_init( PAPI_VER_CURRENT );
@@ -131,7 +131,7 @@ int main (int argc, char **argv)
 	   test_fail(__FILE__, __LINE__,"PAPI_get_component_info failed\n", 0);
 	}
 
-	if (strstr(cmpinfo->name,"rapl")) {
+	if (strstr(cmpinfo->name,"amd_energy")) {
 
 	   rapl_cid=cid;
 

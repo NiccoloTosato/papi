@@ -251,7 +251,6 @@ _amd_energy_init_component( int cidx )
      const PAPI_hw_info_t *hw_info;
      // vediamo come funziona ! cpus = socket oppure core ? NUN SE SA ! 
      int nr_cpus = get_kernel_nr_cpus();
-     printf("get_kernel_ etc %d\n",nr_cpus);
      //salva quanti packages
      int packages[nr_cpus];
      //non si capisce in realta che senso avrebbe sta cosa 
@@ -293,7 +292,6 @@ _amd_energy_init_component( int cidx )
        msr_rapl_power_unit=MSR_AMD_RAPL_POWER_UNIT;
        msr_pkg_energy_status=MSR_AMD_PKG_ENERGY_STATUS;
        msr_pp0_energy_status=MSR_AMD_PP0_ENERGY_STATUS;
-       printf("E' una AMD\n");
        if (hw_info->cpuid_family!=0x17) {
 	 /* Not a family 17h machine */
 	 strCpy=strncpy(_amd_energy_vector.cmp_info.disabled_reason,
@@ -373,7 +371,7 @@ _amd_energy_init_component( int cidx )
     goto fn_fail;
      }
 
-     printf("Found %d packages with %d cpus\n",num_packages,num_cpus);
+     //printf("Found %d packages with %d cpus\n",num_packages,num_cpus);
 
      /* Init fd_array */
      //non ci interessa sta cosa 
@@ -414,7 +412,6 @@ _amd_energy_init_component( int cidx )
      power_divisor=1<<((result>>POWER_UNIT_OFFSET)&POWER_UNIT_MASK);
      cpu_energy_divisor=1<<((result>>ENERGY_UNIT_OFFSET)&ENERGY_UNIT_MASK);
 
-     printf("Power units = %.3fW\n",1.0/power_divisor);
      num_events=(num_packages + num_cpus) * 2;
      
      energy_native_events = (_energy_native_event_entry_t*)
@@ -440,7 +437,6 @@ _amd_energy_init_component( int cidx )
      //per ogni package
 
      for(j=0;j<num_packages;j++) {
-       printf("Genero evento per il pkg %d\n",j);
        //scrivo il nome dell'evento
        strErr=snprintf(energy_native_events[i].name, PAPI_MAX_STR_LEN,
 		       "PACKAGE_ENERGY_CNT:PACKAGE%d",j);
@@ -527,7 +523,7 @@ _amd_energy_init_component( int cidx )
 
      /* Export the component id */
      _amd_energy_vector.cmp_info.CmpIdx = cidx;
-     printf("Fine dell'init,registrati %d eventi\n",num_events);
+
   fn_exit:
     _papi_hwd[cidx]->cmp_info.disabled = retval;
      return retval;
@@ -837,10 +833,10 @@ _amd_energy_ntv_code_to_info(unsigned int EventCode, PAPI_event_info_t *info)
 
 papi_vector_t _amd_energy_vector = {
     .cmp_info = { /* (unspecified values are initialized to 0) */
-       .name = "rapl",
-       .short_name = "rapl",
+       .name = "amd_energy",
+       .short_name = "amd_energy",
        .description = "Linux RAPL energy measurements",
-       .version = "5.3.0",
+       .version = "0.0.1",
        .default_domain = PAPI_DOM_ALL,
        .default_granularity = PAPI_GRN_SYS,
        .available_granularities = PAPI_GRN_SYS,
