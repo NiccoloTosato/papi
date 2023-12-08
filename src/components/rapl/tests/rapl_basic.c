@@ -19,7 +19,7 @@
 #include "papi.h"
 #include "papi_test.h"
 
-#define MAX_RAPL_EVENTS 64
+#define MAX_RAPL_EVENTS 260
 
 
 #ifdef BASIC_TEST
@@ -124,7 +124,7 @@ int main (int argc, char **argv)
      }
 
      numcmp = PAPI_num_components();
-
+     printf("Get numcmp %d\n",numcmp);
      for(cid=0; cid<numcmp; cid++) {
 
 	if ( (cmpinfo = PAPI_get_component_info(cid)) == NULL) {

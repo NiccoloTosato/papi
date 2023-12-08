@@ -38,8 +38,8 @@
 /***************/
 /* AMD Support */
 /***************/
+//questi sono corretti
 #define MSR_AMD_RAPL_POWER_UNIT                 0xc0010299
-
 #define MSR_AMD_PKG_ENERGY_STATUS               0xc001029B
 #define MSR_AMD_PP0_ENERGY_STATUS               0xc001029A
 
@@ -54,34 +54,34 @@
  * And DRAM RAPL Domain is supported on 062D only
  */
 
-/* RAPL defines */
-#define MSR_INTEL_RAPL_POWER_UNIT	0x606
+/* /\* RAPL defines *\/ */
+/* #define MSR_INTEL_RAPL_POWER_UNIT	0x606 */
 
-/* Package */
-#define MSR_PKG_RAPL_POWER_LIMIT        0x610
-#define MSR_INTEL_PKG_ENERGY_STATUS     0x611
-#define MSR_PKG_PERF_STATUS             0x613
-#define MSR_PKG_POWER_INFO              0x614
+/* /\* Package *\/ */
+/* #define MSR_PKG_RAPL_POWER_LIMIT        0x610 */
+/* #define MSR_INTEL_PKG_ENERGY_STATUS     0x611 */
+/* #define MSR_PKG_PERF_STATUS             0x613 */
+/* #define MSR_PKG_POWER_INFO              0x614 */
 
-/* PP0 */
-#define MSR_PP0_POWER_LIMIT             0x638
-#define MSR_INTEL_PP0_ENERGY_STATUS     0x639
-#define MSR_PP0_POLICY                  0x63A
-#define MSR_PP0_PERF_STATUS             0x63B
+/* /\* PP0 *\/ */
+/* #define MSR_PP0_POWER_LIMIT             0x638 */
+/* #define MSR_INTEL_PP0_ENERGY_STATUS     0x639 */
+/* #define MSR_PP0_POLICY                  0x63A */
+/* #define MSR_PP0_PERF_STATUS             0x63B */
 
-/* PP1 */
-#define MSR_PP1_POWER_LIMIT             0x640
-#define MSR_PP1_ENERGY_STATUS           0x641
-#define MSR_PP1_POLICY                  0x642
+/* /\* PP1 *\/ */
+/* #define MSR_PP1_POWER_LIMIT             0x640 */
+/* #define MSR_PP1_ENERGY_STATUS           0x641 */
+/* #define MSR_PP1_POLICY                  0x642 */
 
-/* DRAM */
-#define MSR_DRAM_POWER_LIMIT            0x618
-#define MSR_DRAM_ENERGY_STATUS          0x619
-#define MSR_DRAM_PERF_STATUS            0x61B
-#define MSR_DRAM_POWER_INFO             0x61C
+/* /\* DRAM *\/ */
+/* #define MSR_DRAM_POWER_LIMIT            0x618 */
+/* #define MSR_DRAM_ENERGY_STATUS          0x619 */
+/* #define MSR_DRAM_PERF_STATUS            0x61B */
+/* #define MSR_DRAM_POWER_INFO             0x61C */
 
-/* PSYS RAPL Domain */
-#define MSR_PLATFORM_ENERGY_STATUS      0x64d
+/* /\* PSYS RAPL Domain *\/ */
+/* #define MSR_PLATFORM_ENERGY_STATUS      0x64d */
 
 /* RAPL bitsmasks */
 #define POWER_UNIT_OFFSET          0
@@ -90,22 +90,23 @@
 #define ENERGY_UNIT_OFFSET      0x08
 #define ENERGY_UNIT_MASK        0x1f
 
-#define TIME_UNIT_OFFSET        0x10
-#define TIME_UNIT_MASK          0x0f
+/* #define TIME_UNIT_OFFSET        0x10 */
+/* #define TIME_UNIT_MASK          0x0f */
 
-/* RAPL POWER UNIT MASKS */
-#define POWER_INFO_UNIT_MASK     0x7fff
-#define THERMAL_SHIFT                 0
-#define MINIMUM_POWER_SHIFT          16
-#define MAXIMUM_POWER_SHIFT          32
-#define MAXIMUM_TIME_WINDOW_SHIFT    48
+/* /\* RAPL POWER UNIT MASKS *\/ */
+/* #define POWER_INFO_UNIT_MASK     0x7fff */
+/* #define THERMAL_SHIFT                 0 */
+/* #define MINIMUM_POWER_SHIFT          16 */
+/* #define MAXIMUM_POWER_SHIFT          32 */
+/* #define MAXIMUM_TIME_WINDOW_SHIFT    48 */
 
-
+// keep this 
 typedef struct _rapl_register
 {
 	unsigned int selector;
 } _rapl_register_t;
 
+// still keep this
 typedef struct _rapl_native_event_entry
 {
   char name[PAPI_MAX_STR_LEN];
@@ -118,14 +119,17 @@ typedef struct _rapl_native_event_entry
   _rapl_register_t resources;
 } _rapl_native_event_entry_t;
 
+//keep this
 typedef struct _rapl_reg_alloc
 {
 	_rapl_register_t ra_bits;
 } _rapl_reg_alloc_t;
 
+//va alzato almeno a 192
 /* actually 32?  But setting this to be safe? */
-#define RAPL_MAX_COUNTERS 64
+#define RAPL_MAX_COUNTERS 260
 
+//oks
 typedef struct _rapl_control_state
 {
   int being_measured[RAPL_MAX_COUNTERS];
@@ -165,17 +169,17 @@ int cpu_energy_divisor,dram_energy_divisor;
 unsigned int msr_rapl_power_unit;
 
 #define PACKAGE_ENERGY      	0
-#define PACKAGE_THERMAL     	1
-#define PACKAGE_MINIMUM     	2
-#define PACKAGE_MAXIMUM     	3
-#define PACKAGE_TIME_WINDOW 	4
+/* #define PACKAGE_THERMAL     	1 */
+/* #define PACKAGE_MINIMUM     	2 */
+/* #define PACKAGE_MAXIMUM     	3 */
+/* #define PACKAGE_TIME_WINDOW 	4 */
 #define PACKAGE_ENERGY_CNT      5
-#define PACKAGE_THERMAL_CNT     6
-#define PACKAGE_MINIMUM_CNT     7
-#define PACKAGE_MAXIMUM_CNT     8
-#define PACKAGE_TIME_WINDOW_CNT 9
-#define DRAM_ENERGY		10
-#define PLATFORM_ENERGY		11
+/* #define PACKAGE_THERMAL_CNT     6 */
+/* #define PACKAGE_MINIMUM_CNT     7 */
+/* #define PACKAGE_MAXIMUM_CNT     8 */
+/* #define PACKAGE_TIME_WINDOW_CNT 9 */
+/* #define DRAM_ENERGY		10 */
+/* #define PLATFORM_ENERGY		11 */
 
 /***************************************************************************/
 /******  BEGIN FUNCTIONS  USED INTERNALLY SPECIFIC TO THIS COMPONENT *******/
@@ -183,7 +187,7 @@ unsigned int msr_rapl_power_unit;
 
 
 static long long read_msr(int fd, unsigned int which) {
-
+  //fd e' il file descriptor del registro, which e' l'address del registro
 	uint64_t data;
 
 	if ( fd<0 || pread(fd, &data, sizeof data, which) != sizeof data ) {
@@ -196,7 +200,8 @@ static long long read_msr(int fd, unsigned int which) {
 }
 
 static int open_fd(int offset) {
-  
+  //apre il FS per i MSR; offset e' il numero della CPU !!!!!
+  // dovremmo essere ok con MSRSAFE, salva su un fd_array
   int fd=-1;
   char filename[BUFSIZ];
 
@@ -219,6 +224,7 @@ static int open_fd(int offset) {
   return fd;
 }
 
+//legge proprio, usa read_msr
 static long long read_rapl_value(int index) {
 
    int fd;
@@ -227,7 +233,7 @@ static long long read_rapl_value(int index) {
    return read_msr(fd,rapl_native_events[index].msr);
 
 }
-
+//prende la lettura da msr, la converte usando i vari divisori etc cazzare varie, sta cosa si ridurra a pochissime righe ! 
 static long long convert_rapl_energy(int index, long long value) {
 
    union {
@@ -241,59 +247,61 @@ static long long convert_rapl_energy(int index, long long value) {
       return_val.ll = (long long)(((double)value/cpu_energy_divisor)*1e9);
    }
 
-   if (rapl_native_events[index].type==DRAM_ENERGY) {
-      return_val.ll = (long long)(((double)value/dram_energy_divisor)*1e9);
-   }
+   /* if (rapl_native_events[index].type==DRAM_ENERGY) { */
+   /*    return_val.ll = (long long)(((double)value/dram_energy_divisor)*1e9); */
+   /* } */
 
-   if (rapl_native_events[index].type==PLATFORM_ENERGY) {
-      return_val.ll = (long long)(((double)value/cpu_energy_divisor)*1e9);
-   }
+   /* if (rapl_native_events[index].type==PLATFORM_ENERGY) { */
+   /*    return_val.ll = (long long)(((double)value/cpu_energy_divisor)*1e9); */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_THERMAL) {
-      return_val.fp = (double)
-                      ((value>>THERMAL_SHIFT)&POWER_INFO_UNIT_MASK) /
-                       (double)power_divisor;
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_THERMAL) { */
+   /*    return_val.fp = (double) */
+   /*                    ((value>>THERMAL_SHIFT)&POWER_INFO_UNIT_MASK) / */
+   /*                     (double)power_divisor; */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_MINIMUM) {
-       return_val.fp = (double)
-                       ((value>>MINIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK)/
-                        (double)power_divisor;
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_MINIMUM) { */
+   /*     return_val.fp = (double) */
+   /*                     ((value>>MINIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK)/ */
+   /*                      (double)power_divisor; */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_MAXIMUM) {
-      return_val.fp = (double)
-                      ((value>>MAXIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK)/
-                       (double)power_divisor;
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_MAXIMUM) { */
+   /*    return_val.fp = (double) */
+   /*                    ((value>>MAXIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK)/ */
+   /*                     (double)power_divisor; */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_TIME_WINDOW) {
-      return_val.fp =  (double)
-                    ((value>>MAXIMUM_TIME_WINDOW_SHIFT)&POWER_INFO_UNIT_MASK)/
-                     (double)time_divisor;
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_TIME_WINDOW) { */
+   /*    return_val.fp =  (double) */
+   /*                  ((value>>MAXIMUM_TIME_WINDOW_SHIFT)&POWER_INFO_UNIT_MASK)/ */
+   /*                   (double)time_divisor; */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_THERMAL_CNT) {
-      return_val.ll = ((value>>THERMAL_SHIFT)&POWER_INFO_UNIT_MASK);
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_THERMAL_CNT) { */
+   /*    return_val.ll = ((value>>THERMAL_SHIFT)&POWER_INFO_UNIT_MASK); */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_MINIMUM_CNT) {
-       return_val.ll = ((value>>MINIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK);
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_MINIMUM_CNT) { */
+   /*     return_val.ll = ((value>>MINIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK); */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_MAXIMUM_CNT) {
-      return_val.ll = ((value>>MAXIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK);
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_MAXIMUM_CNT) { */
+   /*    return_val.ll = ((value>>MAXIMUM_POWER_SHIFT)&POWER_INFO_UNIT_MASK); */
+   /* } */
 
-   if (rapl_native_events[index].type==PACKAGE_TIME_WINDOW_CNT) {
-      return_val.ll = ((value>>MAXIMUM_TIME_WINDOW_SHIFT)&POWER_INFO_UNIT_MASK);
-   }
+   /* if (rapl_native_events[index].type==PACKAGE_TIME_WINDOW_CNT) { */
+   /*    return_val.ll = ((value>>MAXIMUM_TIME_WINDOW_SHIFT)&POWER_INFO_UNIT_MASK); */
+   /* } */
 
    return return_val.ll;
 }
 
+
+//sta cosa secondo me va cambiata e anche molto !!!!!!
 static int
-get_kernel_nr_cpus(void)
+ get_kernel_nr_cpus(void)
 {
   FILE *fff;
   int num_read, nr_cpus = 1;
@@ -328,29 +336,34 @@ _rapl_init_thread( hwd_context_t *ctx )
 /*
  * Called when PAPI process is initialized (i.e. PAPI_library_init)
  */
+//inizializza il component, e' una palla sta roba qui 
 static int
 _rapl_init_component( int cidx )
 {
     int retval = PAPI_OK;
+    //boh
      int i,j,k,fd;
      FILE *fff;
      char filename[BUFSIZ];
      long unsigned int strErr;
      char *strCpy;
-
-	int package_avail, dram_avail, pp0_avail, pp1_avail, psys_avail;
-	int different_units;
+     // sto coso controlla se e' available il tutto
+     /* int package_avail, dram_avail, pp0_avail, pp1_avail, psys_avail; */
+     /* int different_units; */
 
      long long result;
      int package;
-
+     // interessante
      const PAPI_hw_info_t *hw_info;
-
+     // vediamo come funziona ! cpus = socket oppure core ? NUN SE SA ! 
      int nr_cpus = get_kernel_nr_cpus();
+     printf("get_kernel_ etc %d\n",nr_cpus);
+     //salva quanti packages
      int packages[nr_cpus];
+     //non si capisce in realta che senso avrebbe sta cosa 
      int cpu_to_use[nr_cpus];
-
-	unsigned int msr_pkg_energy_status,msr_pp0_energy_status;
+     
+     unsigned int msr_pkg_energy_status,msr_pp0_energy_status;
 
 
      /* Fill with sentinel values */
@@ -359,15 +372,15 @@ _rapl_init_component( int cidx )
        cpu_to_use[i] = -1;
      }
 
+     
+     /* check if supported processor */
+     hw_info=&(_papi_hwi_system_info.hw_info);
 
-	/* check if supported processor */
-	hw_info=&(_papi_hwi_system_info.hw_info);
-
-	/* Ugh can't use PAPI_get_hardware_info() if
-		PAPI library not done initializing yet */
-
-	switch(hw_info->vendor) {
-		case PAPI_VENDOR_INTEL:
+     /* Ugh can't use PAPI_get_hardware_info() if
+	PAPI library not done initializing yet */
+     //facciamo solo amd EPYC family sopra 17h etc cazzi mazzi
+     switch(hw_info->vendor) {
+		/* case PAPI_VENDOR_INTEL: */
 		case PAPI_VENDOR_AMD:
 			break;
 		default:
@@ -382,145 +395,145 @@ _rapl_init_component( int cidx )
 
 	/* Make sure it is a family 6 Intel Chip */
 
-	if (hw_info->vendor==PAPI_VENDOR_INTEL) {
+	/* if (hw_info->vendor==PAPI_VENDOR_INTEL) { */
 
-		msr_rapl_power_unit=MSR_INTEL_RAPL_POWER_UNIT;
-		msr_pkg_energy_status=MSR_INTEL_PKG_ENERGY_STATUS;
-		msr_pp0_energy_status=MSR_INTEL_PP0_ENERGY_STATUS;
+	/* 	msr_rapl_power_unit=MSR_INTEL_RAPL_POWER_UNIT; */
+	/* 	msr_pkg_energy_status=MSR_INTEL_PKG_ENERGY_STATUS; */
+	/* 	msr_pp0_energy_status=MSR_INTEL_PP0_ENERGY_STATUS; */
 
-		if (hw_info->cpuid_family!=6) {
-			/* Not a family 6 machine */
-			strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason,
-				"CPU family not supported",PAPI_MAX_STR_LEN);
-			_rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
+	/* 	if (hw_info->cpuid_family!=6) { */
+	/* 		/\* Not a family 6 machine *\/ */
+	/* 		strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason, */
+	/* 			"CPU family not supported",PAPI_MAX_STR_LEN); */
+	/* 		_rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0; */
+        /*  if (strCpy == NULL) HANDLE_STRING_ERROR; */
+        /*  retval = PAPI_ENOIMPL; */
+        /*  goto fn_fail; */
+	/* 	} */
+
+	/* 	/\* Detect RAPL support *\/ */
+	/* 	switch(hw_info->cpuid_model) { */
+
+	/* 	/\* Desktop / Laptops *\/ */
+
+	/* 	case 42:	/\* SandyBridge *\/ */
+	/* 	case 58:	/\* IvyBridge *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=1; */
+	/* 		dram_avail=0; */
+	/* 		psys_avail=0; */
+	/* 		different_units=0; */
+	/* 		break; */
+
+	/* 	case 60:	/\* Haswell *\/ */
+	/* 	case 69:	/\* Haswell ULT *\/ */
+	/* 	case 70:	/\* Haswell GT3E *\/ */
+	/* 	case 92:	/\* Atom Goldmont *\/ */
+	/* 	case 122:	/\* Atom Gemini Lake *\/ */
+	/* 	case 95:	/\* Atom Denverton *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=1; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=0; */
+	/* 		different_units=0; */
+	/* 		break; */
+
+	/* 	case 61:	/\* Broadwell *\/ */
+	/* 	case 71:	/\* Broadwell-H (GT3E) *\/ */
+	/* 	case 86:	/\* Broadwell XEON_D *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=0; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=0; */
+	/* 		different_units=0; */
+	/* 		break; */
+
+	/* 	case 78:	/\* Skylake Mobile *\/ */
+	/* 	case 94:	/\* Skylake Desktop (H/S) *\/ */
+	/* 	case 142:	/\* Kabylake Mobile *\/ */
+	/* 	case 158:	/\* Kabylake Desktop *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=0; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=1; */
+	/* 		different_units=0; */
+	/* 		break; */
+
+	/* 	/\* Server Class Machines *\/ */
+
+	/* 	case 45:	/\* SandyBridge-EP *\/ */
+	/* 	case 62:	/\* IvyBridge-EP *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=0; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=0; */
+	/* 		different_units=0; */
+	/* 		break; */
+
+	/* 	case 63:	/\* Haswell-EP *\/ */
+	/* 	case 79:	/\* Broadwell-EP *\/ */
+	/* 	case 85:	/\* Skylake-X *\/ */
+	/* 	case 106:	/\* Icelake-SP *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=1; */
+	/* 		pp1_avail=0; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=0; */
+	/* 		different_units=1; */
+	/* 		break; */
+
+
+	/* 	case 87:	/\* Knights Landing (KNL) *\/ */
+	/* 	case 133:	/\* Knights Mill (KNM) *\/ */
+	/* 		package_avail=1; */
+	/* 		pp0_avail=0; */
+	/* 		pp1_avail=0; */
+	/* 		dram_avail=1; */
+	/* 		psys_avail=0; */
+	/* 		different_units=1; */
+	/* 		break; */
+
+	/* 	default:	/\* not a supported model *\/ */
+	/* 		strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason, */
+	/* 			"CPU model not supported", */
+	/* 			PAPI_MAX_STR_LEN); */
+	/* 		_rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0; */
+        /*  if (strCpy == NULL) HANDLE_STRING_ERROR; */
+        /*  retval = PAPI_ENOIMPL; */
+        /*  goto fn_fail; */
+	/* 	} */
+	/* } */
+     
+     if (hw_info->vendor==PAPI_VENDOR_AMD) {
+       //qui possiamo pensare che sta roba vada tenuta
+       msr_rapl_power_unit=MSR_AMD_RAPL_POWER_UNIT;
+       msr_pkg_energy_status=MSR_AMD_PKG_ENERGY_STATUS;
+       msr_pp0_energy_status=MSR_AMD_PP0_ENERGY_STATUS;
+       printf("E' una AMD\n");
+       if (hw_info->cpuid_family!=0x17) {
+	 /* Not a family 17h machine */
+	 strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason,
+			"CPU family not supported",PAPI_MAX_STR_LEN);
+	 _rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
          if (strCpy == NULL) HANDLE_STRING_ERROR;
          retval = PAPI_ENOIMPL;
          goto fn_fail;
-		}
+       }
 
-		/* Detect RAPL support */
-		switch(hw_info->cpuid_model) {
+       /* package_avail=1; */
+       /* pp0_avail=1;		/\* Doesn't work on EPYC? *\/ */
+       /* pp1_avail=0; */
+       /* dram_avail=0; */
+       /* psys_avail=0; */
+       /* different_units=0; */
+     }
 
-		/* Desktop / Laptops */
-
-		case 42:	/* SandyBridge */
-		case 58:	/* IvyBridge */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=1;
-			dram_avail=0;
-			psys_avail=0;
-			different_units=0;
-			break;
-
-		case 60:	/* Haswell */
-		case 69:	/* Haswell ULT */
-		case 70:	/* Haswell GT3E */
-		case 92:	/* Atom Goldmont */
-		case 122:	/* Atom Gemini Lake */
-		case 95:	/* Atom Denverton */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=1;
-			dram_avail=1;
-			psys_avail=0;
-			different_units=0;
-			break;
-
-		case 61:	/* Broadwell */
-		case 71:	/* Broadwell-H (GT3E) */
-		case 86:	/* Broadwell XEON_D */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=0;
-			dram_avail=1;
-			psys_avail=0;
-			different_units=0;
-			break;
-
-		case 78:	/* Skylake Mobile */
-		case 94:	/* Skylake Desktop (H/S) */
-		case 142:	/* Kabylake Mobile */
-		case 158:	/* Kabylake Desktop */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=0;
-			dram_avail=1;
-			psys_avail=1;
-			different_units=0;
-			break;
-
-		/* Server Class Machines */
-
-		case 45:	/* SandyBridge-EP */
-		case 62:	/* IvyBridge-EP */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=0;
-			dram_avail=1;
-			psys_avail=0;
-			different_units=0;
-			break;
-
-		case 63:	/* Haswell-EP */
-		case 79:	/* Broadwell-EP */
-		case 85:	/* Skylake-X */
-		case 106:	/* Icelake-SP */
-			package_avail=1;
-			pp0_avail=1;
-			pp1_avail=0;
-			dram_avail=1;
-			psys_avail=0;
-			different_units=1;
-			break;
-
-
-		case 87:	/* Knights Landing (KNL) */
-		case 133:	/* Knights Mill (KNM) */
-			package_avail=1;
-			pp0_avail=0;
-			pp1_avail=0;
-			dram_avail=1;
-			psys_avail=0;
-			different_units=1;
-			break;
-
-		default:	/* not a supported model */
-			strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason,
-				"CPU model not supported",
-				PAPI_MAX_STR_LEN);
-			_rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
-         if (strCpy == NULL) HANDLE_STRING_ERROR;
-         retval = PAPI_ENOIMPL;
-         goto fn_fail;
-		}
-	}
-
-	if (hw_info->vendor==PAPI_VENDOR_AMD) {
-
-		msr_rapl_power_unit=MSR_AMD_RAPL_POWER_UNIT;
-		msr_pkg_energy_status=MSR_AMD_PKG_ENERGY_STATUS;
-		msr_pp0_energy_status=MSR_AMD_PP0_ENERGY_STATUS;
-
-		if (hw_info->cpuid_family!=0x17) {
-			/* Not a family 17h machine */
-			strCpy=strncpy(_rapl_vector.cmp_info.disabled_reason,
-				"CPU family not supported",PAPI_MAX_STR_LEN);
-			_rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
-         if (strCpy == NULL) HANDLE_STRING_ERROR;
-         retval = PAPI_ENOIMPL;
-         goto fn_fail;
-		}
-
-		package_avail=1;
-		pp0_avail=1;		/* Doesn't work on EPYC? */
-		pp1_avail=0;
-		dram_avail=0;
-		psys_avail=0;
-		different_units=0;
-	}
-
-
+       
      /* Detect how many packages */
      // Some code below may be flagged by Coverity due to uninitialized array
      // entries of cpu_to_use[]. This is not a bug; the 'filename' listed below
@@ -531,13 +544,14 @@ _rapl_init_component( int cidx )
      j=0;
      while(1) {
        int num_read;
-
+       
        strErr=snprintf(filename, BUFSIZ, 
 	       "/sys/devices/system/cpu/cpu%d/topology/physical_package_id",j);
        filename[BUFSIZ-1]=0;
        if (strErr > BUFSIZ) HANDLE_STRING_ERROR;
        fff=fopen(filename,"r");
        if (fff==NULL) break;
+       //leggo in che package sta il j-esimo  core
        num_read=fscanf(fff,"%d",&package);
        fclose(fff);
        if (num_read!=1) {
@@ -552,9 +566,13 @@ _rapl_init_component( int cidx )
 
        /* Check if a new package */
        if ((package >= 0) && (package < nr_cpus)) {
+	 //se package e' ragionevole e se e' meno di nr_cpus
          if (packages[package] == -1) {
-           SUBDBG("Found package %d out of total %d\n",package,num_packages);
+	   //se nel package letto ci sta -1, significa che ne ho trovato uno nuovo !!!!
+	   printf("Found package %d out of total %d\n",package,num_packages);
 	   packages[package]=package;
+	   //scrivo quale cazzo di cpu utilizzare per leggere il package
+	   //comunque sta cosa non ci servira' piu
 	   cpu_to_use[package]=j;
 	   num_packages++;
          }
@@ -582,24 +600,26 @@ _rapl_init_component( int cidx )
     goto fn_fail;
      }
 
-     SUBDBG("Found %d packages with %d cpus\n",num_packages,num_cpus);
+     printf("Found %d packages with %d cpus\n",num_packages,num_cpus);
 
      /* Init fd_array */
-
+     //non ci interessa sta cosa 
      fd_array=papi_calloc(num_cpus, sizeof(struct fd_array_t));
      if (fd_array==NULL) {
-         retval = PAPI_ENOMEM;
-         goto fn_fail;
+       retval = PAPI_ENOMEM;
+       goto fn_fail;
      }
 
+     //Apro un FD a caso per verificare MSR, leggere le units etc...
      fd=open_fd(cpu_to_use[0]);
      if (fd<0) {
-        strErr=snprintf(_rapl_vector.cmp_info.disabled_reason, PAPI_MAX_STR_LEN,
-        "Can't open fd for cpu0: %s",strerror(errno));
-        _rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        retval = PAPI_ESYS;
-        goto fn_fail;
+       strErr=snprintf(_rapl_vector.cmp_info.disabled_reason, PAPI_MAX_STR_LEN,
+		       "Can't open fd for cpu0: %s",strerror(errno));
+       _rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN)
+	 HANDLE_STRING_ERROR;
+       retval = PAPI_ESYS;
+       goto fn_fail;
      }
 
      /* Verify needed MSR is readable. In a guest VM it may not be readable*/
@@ -612,6 +632,7 @@ _rapl_init_component( int cidx )
         goto fn_fail;
      }
 
+
      /* Calculate the units used */
      result=read_msr(fd,msr_rapl_power_unit);
 
@@ -620,396 +641,413 @@ _rapl_init_component( int cidx )
 
      power_divisor=1<<((result>>POWER_UNIT_OFFSET)&POWER_UNIT_MASK);
      cpu_energy_divisor=1<<((result>>ENERGY_UNIT_OFFSET)&ENERGY_UNIT_MASK);
-     time_divisor=1<<((result>>TIME_UNIT_OFFSET)&TIME_UNIT_MASK);
+     /* time_divisor=1<<((result>>TIME_UNIT_OFFSET)&TIME_UNIT_MASK); */
 
 	/* Note! On Haswell-EP DRAM energy is fixed at 15.3uJ	*/
 	/* see https://lkml.org/lkml/2015/3/20/582		*/
 	/* Knights Landing is the same */
 	/* so is Broadwell-EP */
-	if ( different_units ) {
-		dram_energy_divisor=1<<16;
-	}
-	else {
-		dram_energy_divisor=cpu_energy_divisor;
-	}
+	/* if ( different_units ) { */
+	/* 	dram_energy_divisor=1<<16; */
+	/* } */
+	/* else { */
+	/* 	dram_energy_divisor=cpu_energy_divisor; */
+	/* } */
 
-     SUBDBG("Power units = %.3fW\n",1.0/power_divisor);
-     SUBDBG("CPU Energy units = %.8fJ\n",1.0/cpu_energy_divisor);
-     SUBDBG("DRAM Energy units = %.8fJ\n",1.0/dram_energy_divisor);
-     SUBDBG("Time units = %.8fs\n",1.0/time_divisor);
+     printf("Power units = %.3fW\n",1.0/power_divisor);
+     //     SUBDBG("CPU Energy units = %.8fJ\n",1.0/cpu_energy_divisor);
+     /* SUBDBG("DRAM Energy units = %.8fJ\n",1.0/dram_energy_divisor); */
+     /* printf("Time units = %.8fs\n",1.0/time_divisor); */
 
      /* Allocate space for events */
      /* Include room for both counts and scaled values */
+     //questo e' il core da cambiare !!! IL NUMERO DI EVENTI REALI !!!!
+     //HYP: num_events=num_packages+ncpus
+     num_events=(num_packages + num_cpus) * 2;
+     /* num_events= ((package_avail*num_packages) + */
+     /*             (pp0_avail*num_packages) + */
+     /*             (pp1_avail*num_packages) + */
+     /*             (dram_avail*num_packages) + */
+     /* 		(psys_avail*num_packages)) * 2; */
 
-     num_events= ((package_avail*num_packages) +
-                 (pp0_avail*num_packages) +
-                 (pp1_avail*num_packages) +
-                 (dram_avail*num_packages) +
-		(psys_avail*num_packages)) * 2;
-
-	if (hw_info->vendor==PAPI_VENDOR_INTEL) {
-		num_events+=(4*num_packages) * 2;
-	}
+	/* if (hw_info->vendor==PAPI_VENDOR_INTEL) { */
+	/* 	num_events+=(4*num_packages) * 2; */
+	/* } */
 
      rapl_native_events = (_rapl_native_event_entry_t*)
-          papi_calloc(num_events, sizeof(_rapl_native_event_entry_t));
+       papi_calloc(num_events, sizeof(_rapl_native_event_entry_t));
      if (rapl_native_events == NULL) {
-        strErr=snprintf(_rapl_vector.cmp_info.disabled_reason, PAPI_MAX_STR_LEN,
-        "%s:%i rapl_native_events papi_calloc for %lu bytes failed.", __FILE__, __LINE__, num_events*sizeof(_rapl_native_event_entry_t));
-        _rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        retval = PAPI_ENOMEM;
-        goto fn_fail;
+       strErr=snprintf(_rapl_vector.cmp_info.disabled_reason, PAPI_MAX_STR_LEN,
+		       "%s:%i rapl_native_events papi_calloc for %lu bytes failed.", __FILE__, __LINE__, num_events*sizeof(_rapl_native_event_entry_t));
+       _rapl_vector.cmp_info.disabled_reason[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       retval = PAPI_ENOMEM;
+       goto fn_fail;
      }
 
-     i = 0;
-     k = num_events/2;
+
 
      /* Create events for package power info */
 
-	if (hw_info->vendor==PAPI_VENDOR_INTEL)
-     for(j=0;j<num_packages;j++) {
-        strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, 
-			"THERMAL_SPEC_CNT:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+     /* 	if (hw_info->vendor==PAPI_VENDOR_INTEL) */
+     /* 	  for(j=0;j<num_packages;j++) { */
+     /*    strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,  */
+     /* 			"THERMAL_SPEC_CNT:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
 
-        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   "Thermal specification in counts; package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[i].fd_offset=cpu_to_use[j];
-		rapl_native_events[i].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[i].resources.selector = i + 1;
-		rapl_native_events[i].type=PACKAGE_THERMAL_CNT;
-		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     /*    strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Thermal specification in counts; package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[i].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[i].resources.selector = i + 1; */
+     /* 		rapl_native_events[i].type=PACKAGE_THERMAL_CNT; */
+     /* 		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
 
-        strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-			"THERMAL_SPEC:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+     /*    strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 			"THERMAL_SPEC:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
 
-        strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN);
-        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-        if (strCpy == NULL) HANDLE_STRING_ERROR;
+     /*    strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN); */
+     /*    rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*    if (strCpy == NULL) HANDLE_STRING_ERROR; */
 
-        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   "Thermal specification for package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[k].fd_offset=cpu_to_use[j];
-		rapl_native_events[k].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[k].resources.selector = k + 1;
-		rapl_native_events[k].type=PACKAGE_THERMAL;
-		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64;
+     /*    strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Thermal specification for package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[k].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[k].resources.selector = k + 1; */
+     /* 		rapl_native_events[k].type=PACKAGE_THERMAL; */
+     /* 		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64; */
 
-		i++;
-		k++;
-     }
+     /* 		i++; */
+     /* 		k++; */
+     /* } */
 
-	if (hw_info->vendor==PAPI_VENDOR_INTEL)
-     for(j=0;j<num_packages;j++) {
-        strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-			"MINIMUM_POWER_CNT:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   "Minimum power in counts; package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[i].fd_offset=cpu_to_use[j];
-		rapl_native_events[i].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[i].resources.selector = i + 1;
-		rapl_native_events[i].type=PACKAGE_MINIMUM_CNT;
-		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     /* 	if (hw_info->vendor==PAPI_VENDOR_INTEL) */
+     /* for(j=0;j<num_packages;j++) { */
+     /*    strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 			"MINIMUM_POWER_CNT:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*    strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Minimum power in counts; package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[i].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[i].resources.selector = i + 1; */
+     /* 		rapl_native_events[i].type=PACKAGE_MINIMUM_CNT; */
+     /* 		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
 
-        strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-			"MINIMUM_POWER:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN);
-        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-        if (strCpy == NULL) HANDLE_STRING_ERROR;
-        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   "Minimum power for package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[k].fd_offset=cpu_to_use[j];
-		rapl_native_events[k].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[k].resources.selector = k + 1;
-		rapl_native_events[k].type=PACKAGE_MINIMUM;
-		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64;
+     /*    strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 			"MINIMUM_POWER:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*    strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN); */
+     /*    rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*    if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*    strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Minimum power for package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[k].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[k].resources.selector = k + 1; */
+     /* 		rapl_native_events[k].type=PACKAGE_MINIMUM; */
+     /* 		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64; */
 
-		i++;
-		k++;
-     }
+     /* 		i++; */
+     /* 		k++; */
+     /* } */
 
-	if (hw_info->vendor==PAPI_VENDOR_INTEL)
-     for(j=0;j<num_packages;j++) {
-        strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-			"MAXIMUM_POWER_CNT:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   "Maximum power in counts; package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[i].fd_offset=cpu_to_use[j];
-		rapl_native_events[i].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[i].resources.selector = i + 1;
-		rapl_native_events[i].type=PACKAGE_MAXIMUM_CNT;
-		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     /* 	if (hw_info->vendor==PAPI_VENDOR_INTEL) */
+     /* for(j=0;j<num_packages;j++) { */
+     /*    strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 			"MAXIMUM_POWER_CNT:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*    strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Maximum power in counts; package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[i].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[i].resources.selector = i + 1; */
+     /* 		rapl_native_events[i].type=PACKAGE_MAXIMUM_CNT; */
+     /* 		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
 
-        strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-			"MAXIMUM_POWER:PACKAGE%d",j);
-        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-        strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN);
-        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-        if (strCpy == NULL) HANDLE_STRING_ERROR;
-        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   "Maximum power for package %d",j);
-        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[k].fd_offset=cpu_to_use[j];
-		rapl_native_events[k].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[k].resources.selector = k + 1;
-		rapl_native_events[k].type=PACKAGE_MAXIMUM;
-		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64;
+     /*    strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 			"MAXIMUM_POWER:PACKAGE%d",j); */
+     /*    rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*    strCpy=strncpy(rapl_native_events[k].units,"W",PAPI_MIN_STR_LEN); */
+     /*    rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*    if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*    strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Maximum power for package %d",j); */
+     /*    rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*    if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[k].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[k].resources.selector = k + 1; */
+     /* 		rapl_native_events[k].type=PACKAGE_MAXIMUM; */
+     /* 		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64; */
 
-		i++;
-		k++;
-     }
+     /* 		i++; */
+     /* 		k++; */
+     /* } */
 
-	if (hw_info->vendor==PAPI_VENDOR_INTEL)
-     for(j=0;j<num_packages;j++) {
-         strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-			"MAXIMUM_TIME_WINDOW_CNT:PACKAGE%d",j);
-         rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-         if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-         strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   "Maximum time window in counts; package %d",j);
-         rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-         if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[i].fd_offset=cpu_to_use[j];
-		rapl_native_events[i].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[i].resources.selector = i + 1;
-		rapl_native_events[i].type=PACKAGE_TIME_WINDOW_CNT;
-		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     /* 	if (hw_info->vendor==PAPI_VENDOR_INTEL) */
+     /* for(j=0;j<num_packages;j++) { */
+     /*     strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 			"MAXIMUM_TIME_WINDOW_CNT:PACKAGE%d",j); */
+     /*     rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*     if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*     strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Maximum time window in counts; package %d",j); */
+     /*     rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*     if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[i].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[i].resources.selector = i + 1; */
+     /* 		rapl_native_events[i].type=PACKAGE_TIME_WINDOW_CNT; */
+     /* 		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
 
-         strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-			"MAXIMUM_TIME_WINDOW:PACKAGE%d",j);
-         rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-         if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-         strCpy=strncpy(rapl_native_events[k].units,"s",PAPI_MIN_STR_LEN);
-         rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-         if (strCpy == NULL) HANDLE_STRING_ERROR;
-         strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   "Maximum time window for package %d",j);
-         rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-         if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-		rapl_native_events[k].fd_offset=cpu_to_use[j];
-		rapl_native_events[k].msr=MSR_PKG_POWER_INFO;
-		rapl_native_events[k].resources.selector = k + 1;
-		rapl_native_events[k].type=PACKAGE_TIME_WINDOW;
-		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64;
+     /*     strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 			"MAXIMUM_TIME_WINDOW:PACKAGE%d",j); */
+     /*     rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*     if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*     strCpy=strncpy(rapl_native_events[k].units,"s",PAPI_MIN_STR_LEN); */
+     /*     rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*     if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*     strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   "Maximum time window for package %d",j); */
+     /*     rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*     if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 		rapl_native_events[k].msr=MSR_PKG_POWER_INFO; */
+     /* 		rapl_native_events[k].resources.selector = k + 1; */
+     /* 		rapl_native_events[k].type=PACKAGE_TIME_WINDOW; */
+     /* 		rapl_native_events[k].return_type=PAPI_DATATYPE_FP64; */
 
-		i++;
-		k++;
-     }
+     /* 		i++; */
+     /* 		k++; */
+     /* } */
+     
+     //cosi a cazzo di canes ???
+     i = 0;
+     k = num_events/2;
 
      /* Create Events for energy measurements */
+     //se posso leggere il package
+     //per ogni package
 
-     if (package_avail) {
-        for(j=0;j<num_packages;j++) {
-            strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-		   		"PACKAGE_ENERGY_CNT:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   		"Energy used in counts by chip package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[i].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[i].msr=msr_pkg_energy_status;
-	   		rapl_native_events[i].resources.selector = i + 1;
-	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
-	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     for(j=0;j<num_packages;j++) {
+       printf("Genero evento per il pkg %d\n",j);
+       //scrivo il nome dell'evento
+       strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
+		       "PACKAGE_ENERGY_CNT:PACKAGE%d",j);
+       rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       //scrivo la descrizione dell'evento
+       strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
+		       "Energy used in counts by chip package %d",j);
+       rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       //questa cosa del fs offset va chiarita, penso sia ok per il package
+       rapl_native_events[i].fd_offset=cpu_to_use[j];
+       rapl_native_events[i].msr=msr_pkg_energy_status;
+       rapl_native_events[i].resources.selector = i + 1;
+       rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
+       rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+       //scrivo il nome dell'evento
+       strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
+		       "PACKAGE_ENERGY:PACKAGE%d",j);
+       rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
+       rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
+       if (strCpy == NULL) HANDLE_STRING_ERROR;
+       //scrivo la descrizione dell'evento
+       strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
+		       "Energy used by chip package %d",j);
+       rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       rapl_native_events[k].fd_offset=cpu_to_use[j];
+       rapl_native_events[k].msr=msr_pkg_energy_status;
+       rapl_native_events[k].resources.selector = k + 1;
+       rapl_native_events[k].type=PACKAGE_ENERGY;
+       rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
 
-            strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-		   		"PACKAGE_ENERGY:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
-            rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-            if (strCpy == NULL) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   		"Energy used by chip package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[k].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[k].msr=msr_pkg_energy_status;
-	   		rapl_native_events[k].resources.selector = k + 1;
-	   		rapl_native_events[k].type=PACKAGE_ENERGY;
-	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
-
-	   		i++;
-			k++;
-		}
+       i++;
+       k++;
      }
 
-     if (pp1_avail) {
-        for(j=0;j<num_packages;j++) {
-            strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-		   		"PP1_ENERGY_CNT:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   	"Energy used in counts by Power Plane 1 (Often GPU) on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-           	rapl_native_events[i].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[i].msr=MSR_PP1_ENERGY_STATUS;
-	   		rapl_native_events[i].resources.selector = i + 1;
-	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
-	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     /* // non e' avail */
+     /*   if (pp1_avail) { */
+     /*    for(j=0;j<num_packages;j++) { */
+     /*        strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 		   		"PP1_ENERGY_CNT:PACKAGE%d",j); */
+     /*        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   	"Energy used in counts by Power Plane 1 (Often GPU) on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*       	rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[i].msr=MSR_PP1_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[i].resources.selector = i + 1; */
+     /* 	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT; */
+     /* 	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
 
-            strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-		   		"PP1_ENERGY:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
-            rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-            if (strCpy == NULL) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   		"Energy used by Power Plane 1 (Often GPU) on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-           	rapl_native_events[k].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[k].msr=MSR_PP1_ENERGY_STATUS;
-	   		rapl_native_events[k].resources.selector = k + 1;
-	   		rapl_native_events[k].type=PACKAGE_ENERGY;
-	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
+     /*        strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 		   		"PP1_ENERGY:PACKAGE%d",j); */
+     /*        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN); */
+     /*        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*        if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   		"Energy used by Power Plane 1 (Often GPU) on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*       	rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[k].msr=MSR_PP1_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[k].resources.selector = k + 1; */
+     /* 	   		rapl_native_events[k].type=PACKAGE_ENERGY; */
+     /* 	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64; */
 
-	   		i++;
-			k++;
-		}
+     /* 	   		i++; */
+     /* 			k++; */
+     /* 		} */
+     /* } */
+     /*   //npn e' avail  */
+     /* if (dram_avail) { */
+     /*    for(j=0;j<num_packages;j++) { */
+     /*        strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 		   		"DRAM_ENERGY_CNT:PACKAGE%d",j); */
+     /*        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   		"Energy used in counts by DRAM on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 	   		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[i].msr=MSR_DRAM_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[i].resources.selector = i + 1; */
+     /* 	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT; */
+     /* 	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
+
+     /*        strErr=snprintf(rapl_native_events[k].name,PAPI_MAX_STR_LEN, */
+     /* 		   		"DRAM_ENERGY:PACKAGE%d",j); */
+     /*        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN); */
+     /*        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*        if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   		"Energy used by DRAM on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 	   		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[k].msr=MSR_DRAM_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[k].resources.selector = k + 1; */
+     /* 	   		rapl_native_events[k].type=DRAM_ENERGY; */
+     /* 	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64; */
+
+     /* 	   		i++; */
+     /* 			k++; */
+     /* 		} */
+     /* } */
+
+     /* if (psys_avail) { */
+     /*    for(j=0;j<num_packages;j++) { */
+
+     /*     strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN, */
+     /* 		   		"PSYS_ENERGY_CNT:PACKAGE%d",j); */
+     /*     rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*     if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN, */
+     /* 		   		"Energy used in counts by SoC on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 	   		rapl_native_events[i].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[i].msr=MSR_PLATFORM_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[i].resources.selector = i + 1; */
+     /* 	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT; */
+     /* 	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64; */
+
+     /*        strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN, */
+     /* 		   		"PSYS_ENERGY:PACKAGE%d",j); */
+     /*        rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /*        strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN); */
+     /*        rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0; */
+     /*        if (strCpy == NULL) HANDLE_STRING_ERROR; */
+     /*        strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN, */
+     /* 		   		"Energy used by SoC on package %d",j); */
+     /*        rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0; */
+     /*        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR; */
+     /* 	   		rapl_native_events[k].fd_offset=cpu_to_use[j]; */
+     /* 	   		rapl_native_events[k].msr=MSR_PLATFORM_ENERGY_STATUS; */
+     /* 	   		rapl_native_events[k].resources.selector = k + 1; */
+     /* 	   		rapl_native_events[k].type=PLATFORM_ENERGY; */
+     /* 	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64; */
+
+     /* 			i++; */
+     /* 			k++; */
+     /* 		} */
+     /* } */
+
+     //ne metto uno per core invece
+     for(j=0;j<num_cpus;j++) {
+       //printf("Genero evento per il core %d\n",j);
+       strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
+		       "PP0_ENERGY_CNT:CORE%d",j);
+       rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
+		       "Energy used in counts by all cores in package %d",j);
+       rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       rapl_native_events[i].fd_offset=j;
+       rapl_native_events[i].msr=msr_pp0_energy_status;
+       rapl_native_events[i].resources.selector = i + 1;
+       rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
+       rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+
+       strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
+		       "PP0_ENERGY:CORE%d",j);
+       rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
+       rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
+       if (strCpy == NULL) HANDLE_STRING_ERROR;
+       strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
+		       "Energy used by all cores in package %d",j);
+       rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
+       if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
+       rapl_native_events[k].fd_offset=j;
+       rapl_native_events[k].msr=msr_pp0_energy_status;
+       rapl_native_events[k].resources.selector = k + 1;
+       rapl_native_events[k].type=PACKAGE_ENERGY;
+       rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
+
+       i++;
+       k++;
      }
 
-     if (dram_avail) {
-        for(j=0;j<num_packages;j++) {
-            strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-		   		"DRAM_ENERGY_CNT:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   		"Energy used in counts by DRAM on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[i].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[i].msr=MSR_DRAM_ENERGY_STATUS;
-	   		rapl_native_events[i].resources.selector = i + 1;
-	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
-	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
+     
+     /* for (i=0; i<140; ++i) { */
+     /*   printf("DEBUG: packages[%d]=%d; cpu_to_use[%d]=%d\n",i,packages[i],i,cpu_to_use[i],i); */
+     /* } */
 
-            strErr=snprintf(rapl_native_events[k].name,PAPI_MAX_STR_LEN,
-		   		"DRAM_ENERGY:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
-            rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-            if (strCpy == NULL) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   		"Energy used by DRAM on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[k].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[k].msr=MSR_DRAM_ENERGY_STATUS;
-	   		rapl_native_events[k].resources.selector = k + 1;
-	   		rapl_native_events[k].type=DRAM_ENERGY;
-	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
-
-	   		i++;
-			k++;
-		}
-     }
-
-     if (psys_avail) {
-        for(j=0;j<num_packages;j++) {
-
-         strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-		   		"PSYS_ENERGY_CNT:PACKAGE%d",j);
-         rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-         if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   		"Energy used in counts by SoC on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[i].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[i].msr=MSR_PLATFORM_ENERGY_STATUS;
-	   		rapl_native_events[i].resources.selector = i + 1;
-	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
-	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
-
-            strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-		   		"PSYS_ENERGY:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
-            rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-            if (strCpy == NULL) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   		"Energy used by SoC on package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[k].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[k].msr=MSR_PLATFORM_ENERGY_STATUS;
-	   		rapl_native_events[k].resources.selector = k + 1;
-	   		rapl_native_events[k].type=PLATFORM_ENERGY;
-	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
-
-			i++;
-			k++;
-		}
-     }
-
-     if (pp0_avail) {
-        for(j=0;j<num_packages;j++) {
-            strErr=snprintf(rapl_native_events[i].name, PAPI_MAX_STR_LEN,
-		   		"PP0_ENERGY_CNT:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[i].description, PAPI_MAX_STR_LEN,
-		   		"Energy used in counts by all cores in package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[i].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[i].msr=msr_pp0_energy_status;
-	   		rapl_native_events[i].resources.selector = i + 1;
-	   		rapl_native_events[i].type=PACKAGE_ENERGY_CNT;
-	   		rapl_native_events[i].return_type=PAPI_DATATYPE_UINT64;
-
-            strErr=snprintf(rapl_native_events[k].name, PAPI_MAX_STR_LEN,
-		   		"PP0_ENERGY:PACKAGE%d",j);
-            rapl_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-            strCpy=strncpy(rapl_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
-            rapl_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
-            if (strCpy == NULL) HANDLE_STRING_ERROR;
-            strErr=snprintf(rapl_native_events[k].description, PAPI_MAX_STR_LEN,
-		   		"Energy used by all cores in package %d",j);
-            rapl_native_events[i].description[PAPI_MAX_STR_LEN-1]=0;
-            if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-	   		rapl_native_events[k].fd_offset=cpu_to_use[j];
-	   		rapl_native_events[k].msr=msr_pp0_energy_status;
-	   		rapl_native_events[k].resources.selector = k + 1;
-	   		rapl_native_events[k].type=PACKAGE_ENERGY;
-	   		rapl_native_events[k].return_type=PAPI_DATATYPE_UINT64;
-
-	   		i++;
-			k++;
-		}
-     }
 
      /* Export the total number of events available */
      _rapl_vector.cmp_info.num_native_events = num_events;
@@ -1020,12 +1058,13 @@ _rapl_init_component( int cidx )
 
      /* Export the component id */
      _rapl_vector.cmp_info.CmpIdx = cidx;
-
+     printf("Fine dell'init,registrati %d eventi\n",num_events);
   fn_exit:
     _papi_hwd[cidx]->cmp_info.disabled = retval;
      return retval;
   fn_fail:
      goto fn_exit;
+
 }
 
 
@@ -1188,8 +1227,6 @@ _rapl_update_control_state( hwd_control_state_t *ctl,
        /* Only need to subtract if it's a PACKAGE_ENERGY or ENERGY_CNT type */
        control->need_difference[index]=
 	 	(rapl_native_events[index].type==PACKAGE_ENERGY ||
-		rapl_native_events[index].type==DRAM_ENERGY ||
-		rapl_native_events[index].type==PLATFORM_ENERGY ||
 	 	rapl_native_events[index].type==PACKAGE_ENERGY_CNT);
     }
 
