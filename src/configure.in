@@ -6,7 +6,7 @@
 # cross compiling should work differently...
 
 AC_PREREQ(2.59)
-AC_INIT(PAPI, 7.0.1.0, ptools-perfapi@icl.utk.edu)
+AC_INIT(PAPI, 7.1.0.0, ptools-perfapi@icl.utk.edu)
 AC_CONFIG_SRCDIR([papi.c])
 AC_CONFIG_HEADER([config.h])
 
@@ -721,6 +721,7 @@ AC_ARG_WITH(tls,
 		                       res1 = (i == (int)arg);
                              else
 		                       res2 = (i == (int)arg);
+		             return NULL;
                            }
 	                       __thread int i;
                            int main () {
@@ -812,7 +813,7 @@ AC_ARG_WITH(virtualtimer,
                                exit(1);
                              }        
                              done = 1;
-	                         return j;
+			     return (void *) j;
                            } 
   
                            int main( int argc, char ** argv ) {
@@ -2050,7 +2051,7 @@ for comp in $components; do
           CFLAGS="$CFLAGS -DHAVE_ROCM"
       fi
 
-      if test "x`find $PAPI_ROCM_ROOT -name "rocm_smi.h"`" != "x" ; then
+      if test "x`find $PAPI_ROCMSMI_ROOT -name "rocm_smi.h"`" != "x" ; then
           CFLAGS="$CFLAGS -DHAVE_ROCM_SMI"
       fi
   fi
