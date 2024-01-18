@@ -38,7 +38,7 @@
 /***************/
 /* AMD Support */
 /***************/
-//questi sono corretti
+//questi sono corretti, sono i registri di AMD
 #define MSR_AMD_RAPL_POWER_UNIT                 0xc0010299
 #define MSR_AMD_PKG_ENERGY_STATUS               0xc001029B
 #define MSR_AMD_PP0_ENERGY_STATUS               0xc001029A
@@ -116,12 +116,14 @@ struct fd_array_t *fd_array=NULL;
 static int num_packages=0,num_cpus=0;
 
 int power_divisor;
-
 int cpu_energy_divisor;
 unsigned int msr_rapl_power_unit;
 
 #define PACKAGE_ENERGY      	0
 #define PACKAGE_ENERGY_CNT      5
+#define CORE_ENERGY      	1
+#define CORE_ENERGY_CNT         6
+
 
 /***************************************************************************/
 /******  BEGIN FUNCTIONS  USED INTERNALLY SPECIFIC TO THIS COMPONENT *******/
@@ -185,8 +187,8 @@ static long long convert_energy_readings(int index, long long value) {
 
    return_val.ll = value; /* default case: return raw input value */
 
-   if (energy_native_events[index].type==PACKAGE_ENERGY) {
-      return_val.ll = (long long)(((double)value/cpu_energy_divisor)*1e9);
+   if ((energy_native_events[index].type==PACKAGE_ENERGY) || (energy_native_events[index].type==CORE_ENERGY) ) {
+     return_val.ll = (long long)(((double)value/cpu_energy_divisor)*1e6);
    }
 
    return return_val.ll;
@@ -340,7 +342,7 @@ _amd_energy_init_component( int cidx )
 	 //se package e' ragionevole e se e' meno di nr_cpus
          if (packages[package] == -1) {
 	   //se nel package letto ci sta -1, significa che ne ho trovato uno nuovo !!!!
-	   printf("Found package %d out of total %d\n",package,num_packages);
+	   //printf("Found package %d out of total %d\n",package,num_packages);
 	   packages[package]=package;
 	   //scrivo quale cazzo di cpu utilizzare per leggere il package
 	   //comunque sta cosa non ci servira' piu
@@ -408,14 +410,15 @@ _amd_energy_init_component( int cidx )
 
      /* units are 0.5^UNIT_VALUE */
      /* which is the same as 1/(2^UNIT_VALUE) */
-
-     power_divisor=1<<((result>>POWER_UNIT_OFFSET)&POWER_UNIT_MASK);
+     //roba totalmente inutile, non ci serve ! 
+     //power_divisor=1<<((result>>POWER_UNIT_OFFSET)&POWER_UNIT_MASK);
+     //ESU
      cpu_energy_divisor=1<<((result>>ENERGY_UNIT_OFFSET)&ENERGY_UNIT_MASK);
 
      num_events=(num_packages + num_cpus) * 2;
      
      energy_native_events = (_energy_native_event_entry_t*)
-       papi_calloc(num_events, sizeof(_energy_native_event_entry_t));
+     papi_calloc(num_events, sizeof(_energy_native_event_entry_t));
      if (energy_native_events == NULL) {
        strErr=snprintf(_amd_energy_vector.cmp_info.disabled_reason, PAPI_MAX_STR_LEN,
 		       "%s:%i energy_native_events papi_calloc for %lu bytes failed.", __FILE__, __LINE__, num_events*sizeof(_energy_native_event_entry_t));
@@ -434,10 +437,12 @@ _amd_energy_init_component( int cidx )
 
      /* Create Events for energy measurements */
      //se posso leggere il package
-     //per ogni package
+     //per ogni package; quindi per ogni socket
 
      for(j=0;j<num_packages;j++) {
-       //scrivo il nome dell'evento
+
+       //######################################################################
+       //scrivo il nome dell'evento, counter RAW
        strErr=snprintf(energy_native_events[i].name, PAPI_MAX_STR_LEN,
 		       "PACKAGE_ENERGY_CNT:PACKAGE%d",j);
        energy_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
@@ -453,12 +458,13 @@ _amd_energy_init_component( int cidx )
        energy_native_events[i].resources.selector = i + 1;
        energy_native_events[i].type=PACKAGE_ENERGY_CNT;
        energy_native_events[i].return_type=PAPI_DATATYPE_UINT64;
-       //scrivo il nome dell'evento
+       //######################################################################
+       //scrivo il nome dell'evento, energia convertita
        strErr=snprintf(energy_native_events[k].name, PAPI_MAX_STR_LEN,
 		       "PACKAGE_ENERGY:PACKAGE%d",j);
        energy_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-       strCpy=strncpy(energy_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
+       strCpy=strncpy(energy_native_events[k].units,"uJ",PAPI_MIN_STR_LEN);
        energy_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
        if (strCpy == NULL) HANDLE_STRING_ERROR;
        //scrivo la descrizione dell'evento
@@ -478,9 +484,10 @@ _amd_energy_init_component( int cidx )
 
      //ne metto uno per core invece
      for(j=0;j<num_cpus;j++) {
+       //######################################################################
        //printf("Genero evento per il core %d\n",j);
        strErr=snprintf(energy_native_events[i].name, PAPI_MAX_STR_LEN,
-		       "PP0_ENERGY_CNT:CORE%d",j);
+		       "CORE_ENERGY_CNT:CORE%d",j);
        energy_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
        strErr=snprintf(energy_native_events[i].description, PAPI_MAX_STR_LEN,
@@ -490,14 +497,14 @@ _amd_energy_init_component( int cidx )
        energy_native_events[i].fd_offset=j;
        energy_native_events[i].msr=msr_pp0_energy_status;
        energy_native_events[i].resources.selector = i + 1;
-       energy_native_events[i].type=PACKAGE_ENERGY_CNT;
+       energy_native_events[i].type=CORE_ENERGY_CNT;
        energy_native_events[i].return_type=PAPI_DATATYPE_UINT64;
-
+       //######################################################################
        strErr=snprintf(energy_native_events[k].name, PAPI_MAX_STR_LEN,
-		       "PP0_ENERGY:CORE%d",j);
+		       "CORE_ENERGY:CORE%d",j);
        energy_native_events[i].name[PAPI_MAX_STR_LEN-1]=0;
        if (strErr > PAPI_MAX_STR_LEN) HANDLE_STRING_ERROR;
-       strCpy=strncpy(energy_native_events[k].units,"nJ",PAPI_MIN_STR_LEN);
+       strCpy=strncpy(energy_native_events[k].units,"uJ",PAPI_MIN_STR_LEN);
        energy_native_events[k].units[PAPI_MIN_STR_LEN-1]=0;
        if (strCpy == NULL) HANDLE_STRING_ERROR;
        strErr=snprintf(energy_native_events[k].description, PAPI_MAX_STR_LEN,
@@ -507,7 +514,7 @@ _amd_energy_init_component( int cidx )
        energy_native_events[k].fd_offset=j;
        energy_native_events[k].msr=msr_pp0_energy_status;
        energy_native_events[k].resources.selector = k + 1;
-       energy_native_events[k].type=PACKAGE_ENERGY;
+       energy_native_events[k].type=CORE_ENERGY;
        energy_native_events[k].return_type=PAPI_DATATYPE_UINT64;
 
        i++;
@@ -537,6 +544,7 @@ _amd_energy_init_component( int cidx )
  * Control of counters (Reading/Writing/Starting/Stopping/Setup)
  * functions
  */
+
 static int
 _amd_energy_init_control_state( hwd_control_state_t *ctl)
 {
@@ -559,7 +567,6 @@ _amd_energy_start( hwd_context_t *ctx, hwd_control_state_t *ctl)
   long long now = PAPI_get_real_usec();
   int i;
 
-  
   for( i = 0; i < AMD_ENERGY_MAX_COUNTERS; i++ ) {
      if ((control->being_measured[i]) && (control->need_difference[i])) {
         context->start_value[i]=(read_energy_value(i) & 0xFFFFFFFF);
@@ -580,26 +587,32 @@ _amd_energy_stop( hwd_context_t *ctx, hwd_control_state_t *ctl )
    _energy_control_state_t* control = (_energy_control_state_t*) ctl;
    long long now = PAPI_get_real_usec();
    int i;
-   long long temp, newstart;
+   long long temp, newstart,temp2;
 
    for ( i = 0; i < AMD_ENERGY_MAX_COUNTERS; i++ ) {
       if (control->being_measured[i]) {
+	//valore raw 32 bit
          temp = read_energy_value(i);
          if (control->need_difference[i]) {
+	   //maskera a 32 bit
             temp &= 0xFFFFFFFF;
             newstart = temp;
             /* test for wrap around */
-            if (temp < context->start_value[i] ) {
-               SUBDBG("Wraparound!\nstart:\t%#016x\ttemp:\t%#016x",
-                  (unsigned)context->start_value[i], (unsigned)temp);
-               temp += (0x100000000 - context->start_value[i]);
-               SUBDBG("\tresult:\t%#016x\n", (unsigned)temp);
+            if (((unsigned long long)temp) < ((unsigned long long)context->start_value[i]) ) {
+	      //printf("Wraparound!\nstart:\t%#016x\ttemp:\t%#016x",
+              //    (unsigned)context->start_value[i], (unsigned)temp);
+               temp += ((unsigned long long)0x100000000 - context->start_value[i]);
+               //printf("\tresult:\t%#016x\n", (unsigned)temp);
+	       //temp2=context->accumulated_value[i]+temp;
+	       //printf("Counter numero: %d energy after WA: %lld uJ\nUnconverted %lld\n",i,convert_energy_readings( i, temp2 ),temp2);
             } else {
                temp -= context->start_value[i];
-            }
+	       //endif wrap around
+	    }
             // reset the start value, add to accum, set temp for convert call.
             context->start_value[i]=newstart;
             context->accumulated_value[i] += temp;
+	    //this will be converted, still a raw value?
             temp = context->accumulated_value[i];
          }
          control->count[i] = convert_energy_readings( i, temp );
@@ -689,11 +702,11 @@ _amd_energy_update_control_state( hwd_control_state_t *ctl,
        index=native[i].ni_event&PAPI_NATIVE_AND_MASK;
        native[i].ni_position=energy_native_events[index].resources.selector - 1;
        control->being_measured[index]=1;
-
+       //assumiamo che il wraparound non succeda MAI sulla core energy...
        /* Only need to subtract if it's a PACKAGE_ENERGY or ENERGY_CNT type */
-       control->need_difference[index]=
-	 	(energy_native_events[index].type==PACKAGE_ENERGY ||
-	 	energy_native_events[index].type==PACKAGE_ENERGY_CNT);
+       control->need_difference[index]= 1;
+       //(energy_native_events[index].type==PACKAGE_ENERGY ||
+       // 	energy_native_events[index].type==PACKAGE_ENERGY_CNT);
     }
 
     return PAPI_OK;
